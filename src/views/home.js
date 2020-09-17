@@ -7,7 +7,7 @@ import Menu from '../assets/components/MenuComponent/index.js'
 import Banner from '../assets/components/BannerComponent/index.js'
 import ProductHome from '../assets/components/ListsComponents/ProductCarrosel.js'
 import ProductList from '../assets/components/ListsComponents/ProductsList.js'
-
+import Footer from '../assets/components/Footer/index.js'
 
 const Container = styled.div`
     width: 1600px; 
@@ -17,7 +17,7 @@ const Container = styled.div`
 
 function App() {
   return (
-    <>
+    <Container>
       <Container>
         <Menu />
       </Container>
@@ -25,11 +25,14 @@ function App() {
         <Banner imagem="https://i.imgur.com/PbHMCEy.png" />
       </Container>
       <Container>
-      <ProductHome titulo="Supreme" category="2"/>
-      <Banner imagem="https://cms-cdn.goat.com/1600/8d3ffb578618-565a-ae11-083f-038380f7.jpg" texto="Air Jordan 5 Retro SE 'Oregon'"/>
-      <ProductHome titulo="Tenis" category="4"/>
+        <ProductHome titulo="Supreme" category="2" />
+        <Banner imagem="https://cms-cdn.goat.com/1600/8d3ffb578618-565a-ae11-083f-038380f7.jpg" texto="Air Jordan 5 Retro SE 'Oregon'" />
+        <ProductHome titulo="Tenis" category="4" />
       </Container>
-    </>
+      <Container>
+      <Footer />
+      </Container>
+    </Container>
   );
 }
 
