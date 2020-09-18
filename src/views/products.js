@@ -2,20 +2,36 @@ import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 //components
-import ProductsList from '../assets/components/ListsComponents/ProductsList.js'
 import Menu from '../assets/components/MenuComponent/index.js'
 import Product from '../assets/components/ProductComponent/index.js'
-import {Base, Ul,Li,Texto} from '../assets/components/MenuComponent/styled.js'
 
 
 //services
 
 import api from '../services/backend-api.js'
 
+const ItemCategory = styled.li`
+    float: left;
+    font-size: 18rem;
+    text-align: center;
+    padding: 15px 20px;
+    border: 1px solid var(--color-footer-gray);
+    :hover{
+        background: var(--color-footer-gray);
+    }
+`
+
+const ListCategory = styled.ul`
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+`
+
 const BaseCategoryMenu = styled.div`
-    width: 1000px;
+    width: 1400px;
     margin: auto;
-    background: #ffffff;
+    justify-content: left;
 `
 
 const Title = styled.p`
@@ -91,23 +107,22 @@ function Products(props) {
         <Container>
             <Menu/>
         </Container>
-        <Container>
         <BaseCategoryMenu>
-                <nav>
-                    <Ul>
+                    <ListCategory>
                         {categories.map(item=>(
-                            <Li key = {item.id} onClick={()=>{
+                            <ItemCategory key = {item.id} onClick={()=>{
                                 setCategory(item.id);
                             }}>
-                                <Texto>{item.name}</Texto>
-                            </Li>
+                               {item.name}
+                            </ItemCategory>
                         ))}
-                    </Ul>
-                </nav>
+                    </ListCategory>
             </BaseCategoryMenu>
-        </Container>
         <Container>
-            <Title>Produtos</Title>
+        
+        </Container>
+
+        <Container>
             <ListProduct>
             {products.map(product =>(
                 <Product key={product.id} name={product.name} imgUrl={product.imgUrl} />
