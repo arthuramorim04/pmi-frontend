@@ -6,7 +6,8 @@ import { MenuItems } from './MenuItems.js'
 import logo1 from '../../img/logo/logo2.png'
 
 function Menu() {
-    
+
+
     return (
         <>
             <Base>
