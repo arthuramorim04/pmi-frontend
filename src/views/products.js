@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
+import {Dropdown} from 'react-bootstrap'
 
 //components
 import Menu from '../assets/components/MenuComponent/index.js'
@@ -7,39 +8,54 @@ import Product from '../assets/components/ProductComponent/index.js'
 
 
 //services
-
 import api from '../services/backend-api.js'
 
-const ItemCategory = styled.li`
-    float: left;
-    font-size: 18rem;
-    text-align: center;
-    padding: 15px 20px;
-    border: 1px solid var(--color-footer-gray);
-    :hover{
-        background: var(--color-footer-gray);
-    }
+
+
+
+const BannerProduct = styled.img`
+    display: absolute;  
+    height: 654px;
 `
 
-const ListCategory = styled.ul`
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    
-`
-
-const BaseCategoryMenu = styled.div`
-    width: 1400px;
-    margin: auto;
-    justify-content: left;
-`
 
 const Title = styled.p`
-  font-size: 23rem;
-  color: --color-footer-gray;
-  margin-bottom: 15px;
+  text-align: center;
+  font-size: 28rem;
+  color: var(--color-black-dark);
+  background: var(--color-footer-gray);
+  padding-left: 15px;
+  padding-right: 15px;
+  :hover{
+    background: var(--color-base);
+  }
 `
 
+const Item = styled.p`
+  text-align: center;
+  font-size: 23rem;
+  color: var(--color-black-dark);
+  padding-left: 15px;
+  padding-right: 15px;
+  :hover{
+    background: var(--color-footer-gray);
+  }
+`
+
+const CategoryName = styled.p`
+  text-align: left;
+  font-size: 28rem;
+  color: var(--color-black-dark);
+  width: 200px;
+  border-bottom: 1px solid var(--color-footer-gray);
+  margin-bottom: 30px;
+`
+const CategoryMenu = styled.header`
+    width: 1400px;
+    margin: auto;
+    justify-content: space-between;
+    background:var(--color-footer-gray);
+`
 const ListProduct = styled.ul`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -49,13 +65,11 @@ const ListProduct = styled.ul`
 `
 
 const Container = styled.div`
-    width: 1600px; 
+    width: 1400px;
     background: var(--color-gray-light);
     margin: auto; 
     
-    ${Title}{
-        margin-left: 100px;
-    }
+    
 `
 
 function Products(props) {
@@ -64,7 +78,9 @@ function Products(props) {
 
     const [products, setProducts] = useState([])
 
-    const [category, setCategory] = useState(['-1'])
+    const [category, setCategory] = useState([-1])
+
+    const [categoryName, setCategoryName] = useState(['Todos'])
 
     async function loadCategories() {
         const response = await api.get('categories')
@@ -85,7 +101,7 @@ function Products(props) {
 
     useEffect(() =>{
         loadCategories();
-        if(category == '-1'){
+        if(category == -1){
             async function loadProducts() {
                 const response = await api.get('products')
              
@@ -103,34 +119,41 @@ function Products(props) {
 
 
     return (
-        <Container>
+        <>
         <Container>
             <Menu/>
-        </Container>
-        <BaseCategoryMenu>
-                    <ListCategory>
+            <BannerProduct src="https://www.dafc.com.vn/website/var/tmp/image-thumbnails/0/4547/thumb__bannerAbout/banner.jpeg"/>
+            <CategoryMenu>
+                <Dropdown >
+                    <Dropdown.Toggle variant="Secondary" id="dropdown-basic">
+                        <Title>Categorias</Title>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
                         {categories.map(item=>(
-                            <ItemCategory key = {item.id} onClick={()=>{
-                                setCategory(item.id);
-                            }}>
-                               {item.name}
-                            </ItemCategory>
-                        ))}
-                    </ListCategory>
-            </BaseCategoryMenu>
-        <Container>
-        
-        </Container>
+                                        <Item key = {item.id} onClick={()=>{
+                                            setCategory(item.id);
+                                            setCategoryName(item.name);
+                                        }}>
+                                        {item.name}
+                                        </Item>
+                                    ))}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </CategoryMenu>
+        </Container>   
 
         <Container>
+            <CategoryName>
+                {categoryName}
+            </CategoryName>
             <ListProduct>
-            {products.map(product =>(
-                <Product key={product.id} name={product.name} imgUrl={product.imgUrl} />
-            ))}
+                {products.map(product =>(
+                    <Product key={product.id} name={product.name} imgUrl={product.imgUrl} />
+                ))}
             </ListProduct>
         </Container>
                     
-        </Container>
+        </>
     )
 }
 
